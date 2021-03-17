@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { StickyHeadTable} from "./components/TableFirst";
+import { StickyHeadTable} from "./components/TableMain";
 import {HashRouter, Route, useHistory} from 'react-router-dom';
 import {UserInfo} from "./components/UserInfo";
 
