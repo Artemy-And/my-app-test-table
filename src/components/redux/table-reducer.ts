@@ -15,11 +15,7 @@ export function tableReducer(state: InitialStateType = initialState, action: All
     switch (action.type) {
         case SET_NEW_ARR:
             return {...state, array: action.array}
-        case SET_INPUT:
-            return {...state, input: action.value}
-
         case SET_ADD_NEW_CONTACT:
-
             return {
                 ...state,
                 array: [action.newContact, ...state.array]
@@ -29,17 +25,13 @@ export function tableReducer(state: InitialStateType = initialState, action: All
             return {...state, array: state.array.filter(tl => tl.id !== action.contactId)}
         case CHANGE_NAME_AC:
             return {...state, array: state.array.map(a => a.id === action.id ? {...a, name: action.name} : a)}
-        case "CHANGE_EMAIL_AC":
+        case CHANGE_EMAIL_AC:
 
             return {...state, array: state.array.map(a => a.id === action.id ? {...a, email: action.email} : a)}
 
-        case "CHANGE_PHONE_AC":
+        case CHANGE_PHONE_AC:
 
-            return {...state, array: state.array.map(a => a.id === action.id ? {...a, tel: action.phone} : a)}
-
-        case "CHANGE_STATUS_AC":
-
-            return {...state, array: state.array.map(a => a.id === action.id ? {...a, status: action.status} : a)}
+            return {...state, array: state.array.map(a => a.id === action.id ? {...a, phone: action.phone} : a)}
 
         default:
             return state
@@ -100,12 +92,6 @@ type SetAddNewContactACType = {
     newContact: DataUsersType
 
 }
-type newContactType = {
-    name: string
-    email: string,
-    tel: string,
-}
-
 
 type setNewArrACType = {
     type: typeof SET_NEW_ARR

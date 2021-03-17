@@ -61,7 +61,7 @@ export function TableMain(props:TableMainPropsType) {
         setPage(0);
     };
     const onClickUserPage = (user:DataUsersType) => {
-        let newUser = {id: Math.floor(Math.random()*100000), name: user.name, lastname: user.lastname,gender:user.gender,email:user.email,phone:user.phone};
+        let newUser = {id:user.id, name: user.name, lastname: user.lastname,gender:user.gender,email:user.email,phone:user.phone};
         props.setUserNew(newUser)
         window.location.hash = "#/user"
     }
@@ -91,7 +91,8 @@ export function TableMain(props:TableMainPropsType) {
                     <TableBody>
                         {array.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                             return (
-                                <TableRow onClick={()=>{onClickUserPage(row)}} hover role="checkbox" tabIndex={-1} key={row.id}>
+                                <TableRow onClick={()=>{
+                                    onClickUserPage(row)}} hover role="checkbox" tabIndex={-1} key={row.id}>
                                     {columns.map((column) => {
                                         const value = row[column.id];
                                         return (
