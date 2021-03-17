@@ -12,6 +12,8 @@ export interface Data {
 function createData(id:number,name: string, lastname: string, gender: string, email: string,phone:number): Data {
     return { id,name, lastname, gender, email,phone };
 }
+
+
 export const rows = [
     createData(Math.floor(Math.random()*100000),'Albert', 'warren', "male", "Albert@gmail.com",89522003030),
     createData(Math.floor(Math.random()*100000),'Evgeny', 'olsen', "male", "Commander@gmail.com",89522002020),

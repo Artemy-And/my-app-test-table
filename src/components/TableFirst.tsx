@@ -9,6 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import {rows} from "./mock/mock-array-users";
+import {RootStateType} from "./redux/Store";
+import { useSelector } from 'react-redux';
 
 interface Column {
     id: 'id'|'name' | 'lastname' | 'gender' | 'email' | 'phone';
@@ -41,6 +43,7 @@ export function StickyHeadTable() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const array = useSelector<RootStateType, Array<any>>(state => state.table.array)
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -69,7 +72,7 @@ export function StickyHeadTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                        {array.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                             return (
                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                     {columns.map((column) => {
