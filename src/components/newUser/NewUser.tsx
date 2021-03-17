@@ -63,7 +63,8 @@ const NewUserMemo = (props: NewContactPropsType) => {
     }, [props.userNew])
 
     const closeButtonClick = () => {
-        props.setModal(false)
+        window.location.hash = "#/"
+        // props.setModal(false)
         props.setUserNew({id:1,name: '', lastname: '', email: '',phone:'',gender:''})
     }
 
@@ -72,7 +73,7 @@ const NewUserMemo = (props: NewContactPropsType) => {
 
     return (
         <Modal
-            isOpen={props.modal}
+            isOpen={true}
             className={style.modalUser}
             contentLabel="Example Modal"
         >

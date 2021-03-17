@@ -40,28 +40,17 @@ const useStyles = makeStyles({
     },
 });
 
+type TableMainPropsType={
+    setUserNew:Function
+}
 
-export function StickyHeadTable() {
-    const dispatch = useDispatch()
+
+export function TableMain(props:TableMainPropsType) {
+
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const array = useSelector<RootStateType, Array<any>>(state => state.table.array)
-    let [modal, setModal] = useState<boolean>(false)
-    const [userNew, setUserNew] = useState<DataUsersType>({
-        id:1,
-        name: '',
-        lastname: '',
-        gender: '',
-        email:'',
-        phone:''
-
-    })
-    const addNewUser = useCallback((user: DataUsersType) => {
-        let newUser = {id: Math.floor(Math.random()*100000), name: user.name, lastname: user.lastname,gender:user.gender,email:user.email,phone:user.phone};
-        dispatch(setAddNewContactAC(newUser))
-        //setUsers([newUser, ...array])
-    }, [array])
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -71,11 +60,16 @@ export function StickyHeadTable() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
+    const onClickUserPage = (user:DataUsersType) => {
+        let newUser = {id: Math.floor(Math.random()*100000), name: user.name, lastname: user.lastname,gender:user.gender,email:user.email,phone:user.phone};
+        props.setUserNew(newUser)
+        window.location.hash = "#/user"
+    }
     return (
         <Paper className={classes.root}>
             <Button color="primary" onClick={() => {
-                setModal(true)
+                window.location.hash = "#/addNewUser"
+                // setModal(true)
             }}>Добавить Пользователя
             </Button>
             <TableContainer className={classes.container}>
@@ -84,6 +78,7 @@ export function StickyHeadTable() {
                         <TableRow>
                             {columns.map((column) => (
                                 <TableCell
+
                                     key={column.id}
                                     align={column.align}
                                     style={{ minWidth: column.minWidth }}
@@ -96,11 +91,11 @@ export function StickyHeadTable() {
                     <TableBody>
                         {array.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                             return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                <TableRow onClick={()=>{onClickUserPage(row)}} hover role="checkbox" tabIndex={-1} key={row.id}>
                                     {columns.map((column) => {
                                         const value = row[column.id];
                                         return (
-                                            <TableCell key={column.id} align={column.align}>
+                                            <TableCell  key={column.id} align={column.align}>
                                                 {column.format && typeof value === 'number' ? column.format(value) : value}
                                             </TableCell>
                                         );
@@ -120,7 +115,7 @@ export function StickyHeadTable() {
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-            <NewUser userNew={userNew} setUserNew={setUserNew} addNewUser={addNewUser} setModal={setModal} modal={modal}/>
+
         </Paper>
     );
 }
