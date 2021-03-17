@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {CustomizedTables} from "./components/TableFirst";
+import {HashRouter, Route, useHistory} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      1
-    </div>
+      <HashRouter>
+        <Route path={'/table'} render={() =>  <CustomizedTables/>}/>
+        <Route path={'/table/user'} render={() =>  <CustomizedTables/>}/>
+      </HashRouter>
   );
 }
 
