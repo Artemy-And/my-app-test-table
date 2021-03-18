@@ -1,12 +1,11 @@
-import React, {ChangeEvent, useCallback, useState} from 'react'
-import {Button, Checkbox, FormControl, FormGroup, TextField} from "@material-ui/core";
+import React, {ChangeEvent, useState} from 'react'
+import {Button, FormControl, FormGroup, TextField} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import {
     changeEmailAC,
     changeLastnameAC,
     changeNameAC,
     changePhoneAC,
-    setAddNewContactAC,
     setDeleteUserAC
 } from "../redux/table-reducer";
 import {DataUsersType} from "../mock/mock-array-users";
@@ -16,6 +15,7 @@ import style from "../Table.module.css";
 
 type AdditionalInfoPropsType = {
     userNew: DataUsersType
+    setUserNew:(value:DataUsersType)=>void
 }
 
 const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
@@ -129,6 +129,7 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                                 </div>
 
                                 <Button className={style.btn} color="secondary" onClick={() => {
+                                    props.setUserNew({id:1,name: '', lastname: '', email: '',phone:'',gender:''})
                                     window.location.hash = "#/"
                                 }}>Close and save</Button>
                                 <Button onClick={() => {

@@ -3,7 +3,7 @@ import {DataUsersType, rows} from "../mock/mock-array-users";
 
 let initialState = {
     input: "",
-    array: rows as Array<any>,
+    array: rows as Array<DataUsersType>,
 
 
 }

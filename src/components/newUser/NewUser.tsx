@@ -14,14 +14,6 @@ type NewContactPropsType = {
     modal: boolean
 }
 
-
-// id:number
-// name: string;
-// lastname: string;
-// gender: string;
-// email: string;
-// phone:number
-
 const NewUserMemo = (props: NewContactPropsType) => {
     let onChangeTextFieldName = useCallback((e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         props.setUserNew({
@@ -71,11 +63,6 @@ const NewUserMemo = (props: NewContactPropsType) => {
     let buttonDisabled = (props.userNew.name.length > 0) && props.userNew.lastname.length > 0 && props.userNew.email.length > 0 && props.userNew.phone.length > 0 ? false : true
     let checkboxDisabled = props.userNew.gender.length > 1 ? true : false
 
-
-
-
-
-
     return (
         <Modal
             isOpen={true}
@@ -123,9 +110,6 @@ const NewUserMemo = (props: NewContactPropsType) => {
                                                  onChange={(e) => {
                                                      onChangeTextFieldGender(e, 'female')
                                                  }}/>Women</span>
-
-
-
                                 <Button variant="contained"
                                         color="primary"
                                         disabled={buttonDisabled}

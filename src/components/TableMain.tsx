@@ -29,17 +29,6 @@ const columns: Column[] = [
     {id: 'gender', label: 'gender',},
     {id: 'delete', label: '', align: 'right'},
 ];
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-
-    },
-    container: {
-        maxHeight: 440,
-    },
-});
 
 type TableMainPropsType = {
     setUserNew: Function
@@ -47,8 +36,7 @@ type TableMainPropsType = {
 
 
 export function TableMain(props: TableMainPropsType) {
-    let dispatch = useDispatch()
-    const classes = useStyles();
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const array = useSelector<RootStateType, Array<DataUsersType>>(state => state.table.array)
@@ -85,7 +73,6 @@ export function TableMain(props: TableMainPropsType) {
         <Paper className={style.root}>
             <Button color="primary" onClick={() => {
                 window.location.hash = "#/addNewUser"
-                // setModal(true)
             }}>Добавить Пользователя
             </Button>
             <TableContainer className={style.containerTable}>
@@ -136,7 +123,6 @@ export function TableMain(props: TableMainPropsType) {
                                             </TableCell>
                                         );
                                     })
-
                                     }
                                 </TableRow>
                             );
