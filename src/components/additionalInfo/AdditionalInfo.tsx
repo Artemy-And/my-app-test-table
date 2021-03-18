@@ -33,8 +33,8 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
     const activatedEditMode = (editMode:Function):boolean => {
        return editMode(true);
     }
-    const disActivatedEditMode = (editMode:Function,AC:Function):boolean => {
-        dispatch(AC(changeName, props.userNew.id))
+    const disActivatedEditMode = (editMode:Function,AC:Function,changeValue:string|number):boolean => {
+        dispatch(AC(changeValue, props.userNew.id))
       return editMode(false);
     }
     const onHandleChange = (changeValue:Function,e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -66,7 +66,7 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                                                         value={changeName}
                                                         onChange={(e)=>{onHandleChange(setChangeName,e)}}
                                                         autoFocus={true}
-                                                        onBlur={()=>{disActivatedEditMode(setEditModeForName,changeNameAC)}}/>
+                                                        onBlur={()=>{disActivatedEditMode(setEditModeForName,changeNameAC,changeName)}}/>
 
                                                     : <span>{changeName}</span>
 
@@ -87,7 +87,7 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                                                     value={changeLastname}
                                                     onChange={(e)=>{onHandleChange(setChangeLastname,e)}}
                                                     autoFocus={true}
-                                                    onBlur={()=>{disActivatedEditMode(setEditModeForLastname,changeLastnameAC)}}/>
+                                                    onBlur={()=>{disActivatedEditMode(setEditModeForLastname,changeLastnameAC,changeLastname)}}/>
                                                 : <span>{changeLastname}</span>
 
                                         }
@@ -104,7 +104,7 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                                                     value={changeEmail}
                                                     onChange={(e)=>{onHandleChange(setChangeEmail,e)}}
                                                     autoFocus={true}
-                                                    onBlur={()=>{disActivatedEditMode(setEditModeEmail,changeEmailAC)}}/>
+                                                    onBlur={()=>{disActivatedEditMode(setEditModeEmail,changeEmailAC,changeEmail)}}/>
                                                 : <span>{changeEmail}</span>
 
                                         }
@@ -120,7 +120,7 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                                                 value={changePhone}
                                                 onChange={(e)=>{onHandleChange(setChangePhone,e)}}
                                                 autoFocus={true}
-                                                onBlur={()=>{disActivatedEditMode(setEditModePhone,changePhoneAC)}}/>
+                                                onBlur={()=>{disActivatedEditMode(setEditModePhone,changePhoneAC,changePhone)}}/>
                                             : <span>{changePhone}</span>
 
                                     }

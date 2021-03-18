@@ -52,11 +52,12 @@ const NewUserMemo = (props: NewContactPropsType) => {
         props.addNewUser(props.userNew)
         props.setModal(false)
         props.setUserNew({id:1,name: '', lastname: '', email: '',phone:'',gender:''})
+        window.location.hash = "#/"
+
     }, [props.userNew])
 
     const closeButtonClick = () => {
         window.location.hash = "#/"
-        // props.setModal(false)
         props.setUserNew({id:1,name: '', lastname: '', email: '',phone:'',gender:''})
     }
 
