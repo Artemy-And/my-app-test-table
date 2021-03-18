@@ -1,4 +1,3 @@
-
 import {DataUsersType, rows} from "../mock/mock-array-users";
 
 
@@ -7,11 +6,10 @@ let initialState = {
     array: rows as Array<any>,
 
 
-
 }
 
 
-export function tableReducer(state: InitialStateType = initialState, action: AllACTypes):InitialStateType {
+export function tableReducer(state: InitialStateType = initialState, action: AllACTypes): InitialStateType {
     switch (action.type) {
         case SET_NEW_ARR:
             return {...state, array: action.array}
@@ -20,11 +18,13 @@ export function tableReducer(state: InitialStateType = initialState, action: All
                 ...state,
                 array: [action.newContact, ...state.array]
             }
-
         case SET_DELETE_CONTACT:
             return {...state, array: state.array.filter(tl => tl.id !== action.contactId)}
         case CHANGE_NAME_AC:
             return {...state, array: state.array.map(a => a.id === action.id ? {...a, name: action.name} : a)}
+        case CHANGE_LASTNAME_AC:
+            return {...state, array: state.array.map(a => a.id === action.id ? {...a, lastname: action.lastname} : a)}
+
         case CHANGE_EMAIL_AC:
 
             return {...state, array: state.array.map(a => a.id === action.id ? {...a, email: action.email} : a)}
@@ -39,19 +39,22 @@ export function tableReducer(state: InitialStateType = initialState, action: All
 }
 
 
-export const setNewArrAC = (array:  Array<DataUsersType>): setNewArrACType => ({type: SET_NEW_ARR, array})
+export const setNewArrAC = (array: Array<DataUsersType>): setNewArrACType => ({type: SET_NEW_ARR, array})
 export const setInputAC = (value: string): setInputACType => ({type: SET_INPUT, value})
 export const setAddNewContactAC = (newContact: DataUsersType): SetAddNewContactACType => ({
     type: SET_ADD_NEW_CONTACT,
     newContact
 })
 
-export const setDeleteContactAC = (contactId: number): setDeleteContactACType => ({
+export const setDeleteUserAC = (contactId: number): setDeleteContactACType => ({
     type: SET_DELETE_CONTACT,
     contactId
 })
 export const changeNameAC = (name: string, id: number): ChangeNameActionType => {
     return {type: CHANGE_NAME_AC, id, name}
+}
+export const changeLastnameAC = (lastname: string, id: number): ChangeLastnameType => {
+    return {type: CHANGE_LASTNAME_AC, id, lastname}
 }
 export const changeEmailAC = (email: string, id: number): ChangeEmailACType => {
     return {type: CHANGE_EMAIL_AC, id, email}
@@ -61,11 +64,7 @@ export const changePhoneAC = (phone: string, id: number): ChangePhoneACType => {
 }
 
 
-type ChangeStatusACType = {
-    type: typeof CHANGE_STATUS_AC
-    id: number
-    status: string
-}
+
 type ChangePhoneACType = {
     type: typeof CHANGE_PHONE_AC
     id: number
@@ -80,6 +79,11 @@ type ChangeNameActionType = {
     type: typeof CHANGE_NAME_AC
     id: number
     name: string
+}
+type ChangeLastnameType = {
+    type: typeof CHANGE_LASTNAME_AC
+    id: number
+    lastname: string
 }
 
 type setDeleteContactACType = {
@@ -108,20 +112,20 @@ type AllACTypes =
     | setInputACType
     | SetAddNewContactACType
     | setDeleteContactACType
-    | ChangeStatusACType
     | ChangePhoneACType
     | ChangeEmailACType
     | ChangeNameActionType
+    | ChangeLastnameType
 
 
 export const SET_NEW_ARR = "SET_NEW_ARR"
 export const SET_INPUT = "SET_INPUT"
 export const SET_ADD_NEW_CONTACT = "SET_ADD_NEW_CONTACT"
 export const SET_DELETE_CONTACT = " SET_DELETE_CONTACT"
-export const CHANGE_NAME_AC = "CHANGE-CHANGE_NAME_AC-TITLE"
+export const CHANGE_NAME_AC = "CHANGE_NAME_AC"
+export const CHANGE_LASTNAME_AC = "CHANGE_LASTNAME_AC"
 export const CHANGE_EMAIL_AC = "CHANGE_EMAIL_AC"
 export const CHANGE_PHONE_AC = "CHANGE_PHONE_AC"
-export const CHANGE_STATUS_AC = "CHANGE_STATUS_AC"
 
 
 export type InitialStateType = {

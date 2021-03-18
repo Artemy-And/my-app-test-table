@@ -1,8 +1,14 @@
 import React, {ChangeEvent, useCallback, useState} from 'react'
-// import style from './AdditionalInfo.module.css'
 import {Button, Checkbox, FormControl, FormGroup, TextField} from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {changeEmailAC, changeNameAC, changePhoneAC, setAddNewContactAC} from "../redux/table-reducer";
+import {
+    changeEmailAC,
+    changeLastnameAC,
+    changeNameAC,
+    changePhoneAC,
+    setAddNewContactAC,
+    setDeleteUserAC
+} from "../redux/table-reducer";
 import {DataUsersType} from "../mock/mock-array-users";
 import Modal from "react-modal";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -10,68 +16,30 @@ import style from "../Table.module.css";
 
 type AdditionalInfoPropsType = {
     userNew: DataUsersType
-    // setShowAdditionalInfo: (value: boolean) => void
 }
 
 const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
     const dispatch = useDispatch()
     let [editModeForName, setEditModeForName] = useState<boolean>(false);
+    let [editModeForLastname, setEditModeForLastname] = useState<boolean>(false);
     let [editModeForEmail, setEditModeEmail] = useState<boolean>(false);
     let [editModeForPhone, setEditModePhone] = useState<boolean>(false);
-    let [editModeForStatus, setEditModeStatus] = useState<boolean>(false);
     let [changeName, setChangeName] = useState(props.userNew.name)
     let [changeLastname, setChangeLastname] = useState(props.userNew.lastname)
     let [changeEmail, setChangeEmail] = useState(props.userNew.email)
     let [changePhone, setChangePhone] = useState(props.userNew.phone)
-    let [changeGender, setChangeGender] = useState(props.userNew.gender)
-
-    const activatedEditModeName = () => {
-        setEditModeForName(true);
-    }
-    const activatedEditModeEmail = () => {
-        setEditModeEmail(true);
-    }
-    const activatedEditModePhone = () => {
-        setEditModePhone(true);
-    }
-    const activatedEditModeStatus = () => {
-        setEditModeStatus(true);
-    }
 
 
-    const disActivatedEditMode1 = () => {
-        setEditModeForName(false);
-        dispatch(changeNameAC(changeName, props.userNew.id))
-
+    const activatedEditMode = (editMode:Function):boolean => {
+       return editMode(true);
     }
-    const disActivatedEditMode2 = () => {
-        setEditModeEmail(false);
-        dispatch(changeEmailAC(changeEmail, props.userNew.id))
-
+    const disActivatedEditMode = (editMode:Function,AC:Function):boolean => {
+        dispatch(AC(changeName, props.userNew.id))
+      return editMode(false);
     }
-    const disActivatedEditMode3 = () => {
-        setEditModePhone(false);
-        dispatch(changePhoneAC(changePhone, props.userNew.id))
-
+    const onHandleChange = (changeValue:Function,e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        changeValue(e.currentTarget.value)
     }
-    const disActivatedEditMode4 = () => {
-        setEditModeStatus(false);
-        // dispatch(changeStatusAC(changeStatus, props.additionalInfoObj.id))
-
-    }
-
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setChangeName(e.currentTarget.value)
-    }
-    const changeTitleEmail = (e: ChangeEvent<HTMLInputElement>) => {
-        setChangeEmail(e.currentTarget.value)
-    }
-    const changeTitlePhone = (e: ChangeEvent<HTMLInputElement>) => {
-        setChangePhone(e.currentTarget.value)
-    }
-    // const changeTitleStatus = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setChangeStatus(e.currentTarget.value)
-    // }
 
     return (
         <Modal
@@ -84,85 +52,94 @@ const AdditionalInfoMemo = (props: AdditionalInfoPropsType) => {
                     <Grid item xs={10}>
                         <FormControl>
                             <FormGroup>
-                                <div>
-                                    Выбран пользователь:
-                                    {
-                                        editModeForName
+                                <div className={style.container}>
+                                    <div>
+                                        <h2>Selected User:</h2>
+                                        <div>
+                                            <span>Name: </span>
+                                            {
+                                                editModeForName
+                                                    ?
+                                                    <TextField
+                                                        size={"small"}
+                                                        variant="outlined"
+                                                        value={changeName}
+                                                        onChange={(e)=>{onHandleChange(setChangeName,e)}}
+                                                        autoFocus={true}
+                                                        onBlur={()=>{disActivatedEditMode(setEditModeForName,changeNameAC)}}/>
+
+                                                    : <span>{changeName}</span>
+
+                                            }
+                                            <span onClick={()=>{activatedEditMode(setEditModeForName)}}> ✏️</span>
+                                        </div>
+
+
+                                    </div>
+                                    <div>
+                                        <span>Lastname: </span>
+                                        {
+                                            editModeForLastname
+                                                ?
+                                                <TextField
+                                                    size={"small"}
+                                                    variant="outlined"
+                                                    value={changeLastname}
+                                                    onChange={(e)=>{onHandleChange(setChangeLastname,e)}}
+                                                    autoFocus={true}
+                                                    onBlur={()=>{disActivatedEditMode(setEditModeForLastname,changeLastnameAC)}}/>
+                                                : <span>{changeLastname}</span>
+
+                                        }
+                                        <span onClick={()=>{activatedEditMode(setEditModeForLastname)}}> ✏️</span>
+                                    </div>
+                                    <div>
+                                        <span>Email: </span>
+                                        {
+                                            editModeForEmail
+                                                ?
+                                                <TextField
+                                                    size={"small"}
+                                                    variant="outlined"
+                                                    value={changeEmail}
+                                                    onChange={(e)=>{onHandleChange(setChangeEmail,e)}}
+                                                    autoFocus={true}
+                                                    onBlur={()=>{disActivatedEditMode(setEditModeEmail,changeEmailAC)}}/>
+                                                : <span>{changeEmail}</span>
+
+                                        }
+                                        <span onClick={()=>{activatedEditMode(setEditModeEmail)}}> ✏️</span>
+                                    </div>
+                                    <div>
+                                        Phone: {
+                                        editModeForPhone
                                             ?
                                             <TextField
                                                 size={"small"}
                                                 variant="outlined"
-                                                value={changeName}
-                                                onChange={changeTitle}
+                                                value={changePhone}
+                                                onChange={(e)=>{onHandleChange(setChangePhone,e)}}
                                                 autoFocus={true}
-                                                onBlur={disActivatedEditMode1}/>
-
-                                            : <span>{changeName}</span>
+                                                onBlur={()=>{disActivatedEditMode(setEditModePhone,changePhoneAC)}}/>
+                                            : <span>{changePhone}</span>
 
                                     }
-                                    <span onClick={activatedEditModeName}>✏️</span>
+                                        <span onClick={()=>{activatedEditMode(setEditModePhone)}}> ✏️</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    Email :
-                                    {
-                                        editModeForEmail
-                                            ?
-                                            <TextField
-                                                size={"small"}
-                                                variant="outlined"
-                                                value={changeEmail}
-                                                onChange={changeTitleEmail}
-                                                autoFocus={true}
-                                                onBlur={disActivatedEditMode2}/>
-                                            : <span>{changeEmail}</span>
 
-                                    }
-                                    <span onClick={activatedEditModeEmail}>✏️</span>
-                                </div>
-                                <div>
-                                    Phone : {
-                                    editModeForPhone
-                                        ?
-                                        <TextField
-                                            size={"small"}
-                                            variant="outlined"
-                                            value={changePhone}
-                                            onChange={changeTitlePhone}
-                                            autoFocus={true}
-                                            onBlur={disActivatedEditMode3}/>
-                                        : <span>{changePhone}</span>
-
-                                }
-                                    <span onClick={activatedEditModePhone}>✏️</span>
-                                </div>
-                                {/*<div>*/}
-                                {/*    Status : {*/}
-                                {/*    editModeForStatus*/}
-                                {/*        ?*/}
-                                {/*        <TextField*/}
-                                {/*            size={"small"}*/}
-                                {/*            variant="outlined"*/}
-                                {/*            value={changeStatus}*/}
-                                {/*            onChange={changeTitleStatus}*/}
-                                {/*            autoFocus={true}*/}
-                                {/*            onBlur={disActivatedEditMode4}/>*/}
-                                {/*        : <span onDoubleClick={activatedEditModeStatus}>{changeStatus}</span>*/}
-                                {/*}*/}
-                                {/*</div>*/}
                                 <Button className={style.btn} color="secondary" onClick={() => {
-                                    // UpdateUser()
                                     window.location.hash = "#/"
-                                    // props.setShowAdditionalInfo(false)
                                 }}>Close and save</Button>
-
+                                <Button onClick={() => {
+                                    dispatch(setDeleteUserAC(props.userNew.id))
+                                }}>Delete</Button>
                             </FormGroup>
                         </FormControl>
                     </Grid>
                 </Grid>
             </div>
         </Modal>
-
-
 
 
     )

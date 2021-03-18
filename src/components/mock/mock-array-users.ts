@@ -7,6 +7,7 @@ export interface DataUsersType {
     gender: GenderType;
     email: string;
     phone:string
+    delete?:string
 }
 export type GenderType = 'male' | 'female' | ''
 function createData(id:number, name: string, lastname: string, gender: GenderType, email: string, phone:string): DataUsersType {

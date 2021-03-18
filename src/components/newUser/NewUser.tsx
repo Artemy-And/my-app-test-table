@@ -71,6 +71,11 @@ const NewUserMemo = (props: NewContactPropsType) => {
     let buttonDisabled = (props.userNew.name.length > 0) && props.userNew.lastname.length > 0 && props.userNew.email.length > 0 && props.userNew.phone.length > 0 ? false : true
     let checkboxDisabled = props.userNew.gender.length > 1 ? true : false
 
+
+
+
+
+
     return (
         <Modal
             isOpen={true}

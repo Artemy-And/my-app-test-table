@@ -33,8 +33,8 @@ function App() {
 
   return (
       <HashRouter>
-        <Route path={'/'} render={() =>  <TableMain setUserNew={setUserNew}/>}/>
           <Route path={'/addNewUser'} render={() => <NewUser userNew={userNew} setUserNew={setUserNew} addNewUser={addNewUser} setModal={setModal} modal={modal}/>}/>
+        <Route path={'/'} render={() =>  <TableMain setUserNew={setUserNew}/>}/>
         <Route path={'/user'} render={() =>  <AdditionalInfo userNew={userNew}/>}/>
 
       </HashRouter>
